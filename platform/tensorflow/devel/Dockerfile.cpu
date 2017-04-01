@@ -1,0 +1,27 @@
+FROM itamtao/tensorflow-basis-cpu
+
+MAINTAINER Tao Lin <itamtao@gmail.com>
+
+# define user
+ENV USER_NAME tlin
+
+# Install zsh
+RUN apt-get update && apt-get install -y zsh git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN useradd --create-home --shell /bin/zsh ${USER_NAME}
+RUN echo "${USER_NAME}:${USER_NAME}" | chpasswd
+RUN usermod -aG sudo,adm ${USER_NAME}
+
+# install pip package
+# Install requirements.
+RUN pip install --no-cache-dir seaborn==0.7.1
+RUN pip install --no-cache-dir scikit-learn==0.17.1
+
+# switch to user.
+USER tlin
+VOLUME /home/tlin/notebooks
+WORKDIR /home/tlin/notebooks
+# configure shell
+RUN git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh \
+      && cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc

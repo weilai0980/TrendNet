@@ -1,0 +1,2 @@
+from randomSegmentation import RandomSegmentation
+from linearModelSegmentation import LinearModelSegmentation

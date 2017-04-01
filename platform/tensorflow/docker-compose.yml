@@ -1,0 +1,26 @@
+version: '2'
+services:
+    tensorflow-basis-cpu:
+        build:
+            context: ./basis
+            dockerfile: Dockerfile.cpu
+        image: itamtao/tensorflow-basis-cpu
+    tensorflow-basis-gpu:
+        build:
+            context: ./basis
+            dockerfile: Dockerfile.gpu
+        image: itamtao/tensorflow-basis-gpu
+    tensorflow-devel-cpu:
+        build:
+            context: ./devel/
+            dockerfile: Dockerfile.cpu
+        image: itamtao/tensorflow-devel-cpu
+        depends_on:
+          - tensorflow-basis-cpu
+    tensorflow-devel-gpu:
+        build:
+            context: ./devel/
+            dockerfile: Dockerfile.gpu
+        image: itamtao/tensorflow-devel-gpu
+        depends_on:
+          - tensorflow-basis-gpu
